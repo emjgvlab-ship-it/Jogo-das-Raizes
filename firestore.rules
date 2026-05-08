@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function isSignedIn() { return request.auth != null; }
+
+    function isValidLeaderboardEntry(data) {
+      return data.keys().hasAll(['name', 'score', 'turma', 'createdAt']) &&
+             data.keys().size() == 4 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.score is number && data.score >= 0 &&
+             data.turma is string && data.turma.size() > 0 && data.turma.size() <= 20 &&
+             data.createdAt == request.time;
+    }
+
+    match /leaderboard/{entryId} {
+      // Allow list and get for everyone (to show the top 5)
+      allow read: if true; 
+      
+      // Allow creating a new entry with strict validation
+      allow create: if isValidId(entryId) && isValidLeaderboardEntry(incoming());
+      
+      // No updates or deletes allowed from client side for leaderboard
+      allow update, delete: if false;
+    }
+  }
+}

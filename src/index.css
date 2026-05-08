@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Fredoka", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-canva-teal: #00C4CC;
+  --color-canva-purple: #7D2AE8;
+  --color-canva-yellow: #FFD700;
+  --color-canva-bg: #F6F9FC;
+}
+
+@layer base {
+  body {
+    @apply bg-canva-bg text-slate-800 antialiased;
+  }
+}
