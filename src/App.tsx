@@ -247,26 +247,28 @@ export default function App() {
   const [isLocked, setIsLocked] = useState(false);
   const [showLevel4Help, setShowLevel4Help] = useState(false);
 
-  const calcAction = (val: string) => {
+  const calcAction = React.useCallback((val: string) => {
     if (val === 'C') setCalcDisplay('');
     else if (val === '=') {
-      try {
-        // Simple evaluation - replace visual symbols with JS operators
-        let expr = calcDisplay
-          .replace(/X/g, '*')
-          .replace(/÷/g, '/')
-          .replace(/√(\d+\.?\d*)/g, 'Math.sqrt($1)');
-        // eslint-disable-next-line no-eval
-        setCalcDisplay(eval(expr).toString());
-      } catch {
-        setCalcDisplay('Erro');
-      }
+      setCalcDisplay(prev => {
+        try {
+          // Simple evaluation - replace visual symbols with JS operators
+          let expr = prev
+            .replace(/X/g, '*')
+            .replace(/÷/g, '/')
+            .replace(/√(\d+\.?\d*)/g, 'Math.sqrt($1)');
+          // eslint-disable-next-line no-eval
+          return eval(expr).toString();
+        } catch {
+          return 'Erro';
+        }
+      });
     } else if (val === '√') {
       setCalcDisplay(prev => prev + '√');
     } else {
       setCalcDisplay(prev => prev + val);
     }
-  };
+  }, []);
 
   // Load leaderboard on mount using Firestore
   useEffect(() => {
@@ -293,6 +295,38 @@ export default function App() {
 
     return () => unsubscribe();
   }, []);
+
+  // Keyboard support for calculator
+  useEffect(() => {
+    if (!showCalc) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key;
+      
+      if (/[0-9]/.test(key)) calcAction(key);
+      else if (key === '.') calcAction('.');
+      else if (key === '+') calcAction('+');
+      else if (key === '-') calcAction('-');
+      else if (key === '*' || key.toLowerCase() === 'x') calcAction('X');
+      else if (key === '/') calcAction('÷');
+      else if (key === 'Enter' || key === '=') {
+        e.preventDefault();
+        calcAction('=');
+      }
+      else if (key === 'Escape' || key.toLowerCase() === 'c') {
+        calcAction('C');
+      }
+      else if (key === 'Backspace') {
+        setCalcDisplay(prev => prev.slice(0, -1));
+      }
+      else if (key.toLowerCase() === 'r' || key === 'q') {
+        calcAction('√');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showCalc, calcAction]);
 
   const saveScore = async () => {
     if (!playerName.trim() || hasSavedRecord) return;
@@ -817,27 +851,27 @@ export default function App() {
               <AnimatePresence>
                 {showLevel4Help && (
                   <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="bg-indigo-50 border-2 border-indigo-100 p-6 md:p-8 rounded-[2rem] space-y-4"
                   >
-                    <div className="bg-indigo-50 border-2 border-indigo-100 p-8 rounded-[2.5rem] space-y-4">
-                      <h4 className="font-bold text-indigo-700 text-xl text-center">💡 Passo a Passo do Cálculo:</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-indigo-900/80">
-                        <div className="space-y-2 bg-white/50 p-4 rounded-2xl">
-                          <p className="font-bold text-indigo-800">1º Encontre o Lado:</p>
-                          <p className="text-sm">A área do jardim é {gardenArea}m². O lado é <span className="font-bold">√{gardenArea}</span>.</p>
-                          <p className="text-sm italic">Dica: Use a calculadora mística se o número for difícil!</p>
-                        </div>
-                        <div className="space-y-2 bg-white/50 p-4 rounded-2xl">
-                          <p className="font-bold text-indigo-800">2º Calcule o Perímetro:</p>
-                          <p className="text-sm">O perímetro é a soma dos 4 lados: <br/><span className="font-bold">4 × Lado</span>.</p>
-                        </div>
-                        <div className="space-y-2 bg-white/50 p-4 rounded-2xl">
-                          <p className="font-bold text-indigo-800">3º Calcule o Custo:</p>
-                          <p className="text-sm">Multiplique o perímetro pelo preço do metro: <br/><span className="font-bold">Perímetro × {pricePerMeter}</span>.</p>
-                        </div>
+                    <h4 className="font-bold text-indigo-700 text-xl text-center flex items-center justify-center gap-2">
+                      <Calculator className="w-5 h-5" />
+                      Passo a Passo do Cálculo
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-indigo-900/80">
+                      <div className="space-y-2 bg-white/60 p-4 rounded-2xl border border-indigo-100">
+                        <p className="font-bold text-indigo-800">1º Encontre o Lado:</p>
+                        <p className="text-sm">Área = {gardenArea}m². Lado = <span className="font-bold">√{gardenArea}</span>.</p>
+                      </div>
+                      <div className="space-y-2 bg-white/60 p-4 rounded-2xl border border-indigo-100">
+                        <p className="font-bold text-indigo-800">2º Calcule o Perímetro:</p>
+                        <p className="text-sm">4 lados iguais: <br/><span className="font-bold">4 × Lado</span>.</p>
+                      </div>
+                      <div className="space-y-2 bg-white/60 p-4 rounded-2xl border border-indigo-100">
+                        <p className="font-bold text-indigo-800">3º Calcule o Custo:</p>
+                        <p className="text-sm">Preço do metro = R$ 15,50: <br/><span className="font-bold">Perímetro × 15,50</span>.</p>
                       </div>
                     </div>
                   </motion.div>
