@@ -597,12 +597,12 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[250px] lg:min-h-[350px] border-2 border-dashed border-slate-200">
+                <div className="bg-slate-50 rounded-[1.5rem] p-4 flex items-center justify-center min-h-[200px] lg:min-h-[300px] border-2 border-dashed border-slate-200">
                   <motion.div 
-                    className="bg-canva-teal rounded-3xl shadow-2xl flex items-center justify-center relative ring-8 ring-canva-teal/20"
+                    className="bg-canva-teal rounded-3xl shadow-2xl flex items-center justify-center relative ring-4 ring-canva-teal/20"
                     style={{ 
-                      width: exploreSize * 25, 
-                      height: exploreSize * 25,
+                      width: exploreSize * 20, 
+                      height: exploreSize * 20,
                     }}
                     layout
                   >
@@ -696,16 +696,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-10">
-                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[250px] w-full border-2 border-dashed border-slate-200">
+              <div className="flex flex-col items-center gap-6">
+                <div className="bg-slate-50 rounded-[1.5rem] p-4 flex items-center justify-center min-h-[180px] w-full border-2 border-dashed border-slate-200">
                   <motion.div 
                     key={currentQuestion}
                     initial={{ scale: 0, rotate: -10 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    className="bg-canva-purple rounded-lg shadow-2xl flex items-center justify-center text-white relative ring-8 ring-canva-purple/20"
+                    className="bg-canva-purple rounded-lg shadow-2xl flex items-center justify-center text-white relative ring-4 ring-canva-purple/20"
                     style={{ 
-                      width: level1Questions[currentQuestion].correct * 20, 
-                      height: level1Questions[currentQuestion].correct * 20,
+                      width: level1Questions[currentQuestion].correct * 15, 
+                      height: level1Questions[currentQuestion].correct * 15,
                     }}
                   >
                     <RulerPoints length={level1Questions[currentQuestion].correct} orientation="horizontal" />
@@ -756,24 +756,24 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-100/50 p-6 md:p-8 rounded-[2.5rem] border-2 border-dashed border-slate-200">
-                <div className="flex flex-col items-center gap-12">
+              <div className="bg-slate-100/50 p-4 md:p-6 rounded-[2rem] border-2 border-dashed border-slate-200">
+                <div className="flex flex-col items-center gap-6">
                   
                   {/* Central Square visualization */}
-                  <div className="flex flex-col items-center gap-8 w-full pt-4">
+                  <div className="flex flex-col items-center gap-4 w-full pt-2">
                     <div className="relative">
                       <motion.div 
                         animate={{ scale: [1, 1.03, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        className="bg-amber-500 rounded-xl border-8 border-white shadow-2xl shadow-amber-500/20 flex items-center justify-center text-white font-black"
+                        className="bg-amber-500 rounded-xl border-4 border-white shadow-2xl shadow-amber-500/20 flex items-center justify-center text-white font-black"
                         style={{ 
-                          width: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 25, 200), 
-                          height: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 25, 200) 
+                          width: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 18, 160), 
+                          height: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 18, 160) 
                         }}
                       >
                         <div className="text-center">
-                          <div className="text-sm font-bold opacity-70 mb-1 leading-tight">ÁREA</div>
-                          <div className="text-4xl">{level2Questions[currentQuestion].area} <span className="text-xl">m²</span></div>
+                          <div className="text-xs font-bold opacity-70 mb-0.5 leading-tight">ÁREA</div>
+                          <div className="text-2xl">{level2Questions[currentQuestion].area} <span className="text-sm">m²</span></div>
                         </div>
                       </motion.div>
 
@@ -1081,10 +1081,10 @@ export default function App() {
       <AnimatePresence>
         {feedback && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            initial={{ opacity: 0, y: -50, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
-            className={`fixed bottom-12 left-1/2 -translate-x-1/2 px-10 py-5 rounded-full flex items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-50 ring-4 ring-white ${
+            className={`fixed top-24 left-1/2 -translate-x-1/2 px-10 py-5 rounded-full flex items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-50 ring-4 ring-white ${
               feedback.type === 'success' ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'
             }`}
           >
