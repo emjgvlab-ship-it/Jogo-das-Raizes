@@ -597,12 +597,12 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="bg-slate-50 rounded-[1.5rem] p-4 flex items-center justify-center min-h-[200px] lg:min-h-[300px] border-2 border-dashed border-slate-200">
+                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[220px] lg:min-h-[320px] border-2 border-dashed border-slate-200">
                   <motion.div 
                     className="bg-canva-teal rounded-3xl shadow-2xl flex items-center justify-center relative ring-4 ring-canva-teal/20"
                     style={{ 
-                      width: exploreSize * 20, 
-                      height: exploreSize * 20,
+                      width: exploreSize * 22, 
+                      height: exploreSize * 22,
                     }}
                     layout
                   >
@@ -696,16 +696,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-6">
-                <div className="bg-slate-50 rounded-[1.5rem] p-4 flex items-center justify-center min-h-[180px] w-full border-2 border-dashed border-slate-200">
+              <div className="flex flex-col items-center gap-8">
+                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[220px] w-full border-2 border-dashed border-slate-200">
                   <motion.div 
                     key={currentQuestion}
                     initial={{ scale: 0, rotate: -10 }}
                     animate={{ scale: 1, rotate: 0 }}
                     className="bg-canva-purple rounded-lg shadow-2xl flex items-center justify-center text-white relative ring-4 ring-canva-purple/20"
                     style={{ 
-                      width: level1Questions[currentQuestion].correct * 15, 
-                      height: level1Questions[currentQuestion].correct * 15,
+                      width: level1Questions[currentQuestion].correct * 18, 
+                      height: level1Questions[currentQuestion].correct * 18,
                     }}
                   >
                     <RulerPoints length={level1Questions[currentQuestion].correct} orientation="horizontal" />
@@ -756,19 +756,19 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-100/50 p-4 md:p-6 rounded-[2rem] border-2 border-dashed border-slate-200">
-                <div className="flex flex-col items-center gap-6">
+              <div className="bg-slate-100/50 p-6 md:p-8 rounded-[2.5rem] border-2 border-dashed border-slate-200">
+                <div className="flex flex-col items-center gap-8">
                   
                   {/* Central Square visualization */}
-                  <div className="flex flex-col items-center gap-4 w-full pt-2">
+                  <div className="flex flex-col items-center gap-6 w-full pt-4">
                     <div className="relative">
                       <motion.div 
                         animate={{ scale: [1, 1.03, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                         className="bg-amber-500 rounded-xl border-4 border-white shadow-2xl shadow-amber-500/20 flex items-center justify-center text-white font-black"
                         style={{ 
-                          width: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 18, 160), 
-                          height: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 18, 160) 
+                          width: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 22, 180), 
+                          height: Math.min(Math.sqrt(level2Questions[currentQuestion].area) * 22, 180) 
                         }}
                       >
                         <div className="text-center">
