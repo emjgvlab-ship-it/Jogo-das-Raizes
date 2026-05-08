@@ -74,18 +74,15 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
 // Test connection
 async function testConnection() {
   try {
-    // Attempting to read a test path. 
-    // This might fail with "Permission Denied" which is actually a GOOD sign (connection works, rules block).
+    // Apenas tenta tocar no servidor para verificar se o ID do banco está correto
     await getDocFromServer(doc(db, 'test', 'connection'));
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
+    // Erro de permissão é esperado e significa que estamos ONLINE
     if (msg.includes('offline')) {
-      console.error("Firestore Offline: Verifique sua conexão ou configuração.");
-    } else if (msg.includes('permission-denied')) {
-      console.log("Firestore Online (Acesso restrito por regras, o que é normal).");
-    } else {
-      console.error("Firestore Connection Info:", msg);
+      console.error("Firebase Offline: Verifique sua conexão.");
     }
+    // Não logamos erro de permissão para não confundir o usuário
   }
 }
 testConnection();
