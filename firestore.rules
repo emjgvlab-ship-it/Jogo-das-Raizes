@@ -16,7 +16,7 @@ service cloud.firestore {
              data.keys().size() == 4 &&
              data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
              data.score is number && data.score >= 0 &&
-             data.turma is string && data.turma.size() > 0 && data.turma.size() <= 20 &&
+             data.turma is string && data.turma.size() > 0 && data.turma.size() <= 100 &&
              data.createdAt == request.time;
     }
 

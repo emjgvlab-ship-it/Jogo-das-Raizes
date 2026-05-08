@@ -135,7 +135,7 @@ const PhaseIndicator = ({ currentPhase }: { currentPhase: GameState }) => {
   if (currentPhase === 'START' || currentPhase === 'FINISH') return null;
 
   return (
-    <div className="w-full max-w-3xl mx-auto mb-8">
+    <div className="w-full max-w-3xl mx-auto mb-4">
       <div className="flex items-center justify-between relative px-2">
         {/* Line */}
         <div className="absolute top-1/2 left-0 w-full h-[2px] bg-neutral-200 -translate-y-1/2 z-0" />
@@ -222,7 +222,7 @@ export default function App() {
   // Game Performance State
   const [score, setScore] = useState(0);
   const [playerName, setPlayerName] = useState('');
-  const [playerClass, setPlayerClass] = useState('901 - 2026');
+  const [playerClass, setPlayerClass] = useState('');
   const [hasSavedRecord, setHasSavedRecord] = useState(false);
   const [leaderboard, setLeaderboard] = useState<{name: string, score: number, turma: string, date?: string}[]>([]);
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -448,7 +448,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-canva-bg font-sans text-slate-800 selection:bg-canva-teal/20 pb-20">
+    <div className="h-screen w-full flex flex-col bg-canva-bg font-sans text-slate-800 selection:bg-canva-teal/20 overflow-hidden relative">
       {/* Abstract Background Shapes */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden overflow-hidden">
         <motion.div 
@@ -464,8 +464,8 @@ export default function App() {
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-canva-yellow/10 rounded-full blur-2xl" />
       </div>
 
-      <main className="relative max-w-5xl mx-auto px-6 py-12 md:py-16">
-        <div className="flex justify-between items-center mb-12">
+      <main className="relative flex-1 max-w-5xl w-full mx-auto px-4 md:px-6 py-4 md:py-6 flex flex-col min-h-0">
+        <div className="flex justify-between items-center mb-6 shrink-0">
           <PhaseIndicator currentPhase={gameState} />
           {gameState !== 'START' && gameState !== 'FINISH' && (
             <div className="flex gap-4">
@@ -486,7 +486,7 @@ export default function App() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-16 text-center space-y-10 border-8 border-white group"
+              className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-10 text-center space-y-6 border-8 border-white group overflow-y-auto max-h-full"
             >
               <div className="relative inline-block">
                 <motion.div 
@@ -499,16 +499,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+              <div className="space-y-2">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
                   Laboratório de <span className="text-canva-teal">Raízes</span>
                 </h1>
-                <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+                <p className="text-lg text-slate-500 max-w-2xl mx-auto font-medium">
                   Uma jornada geométrica entre áreas e números irracionais.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto pt-2">
                 {[
                   { icon: Square, color: 'text-canva-teal', bg: 'bg-canva-teal/10', title: 'Geometria', desc: 'Sinta a área se transformar em lado.' },
                   { icon: Calculator, color: 'text-canva-purple', bg: 'bg-canva-purple/10', title: 'Estimativa', desc: 'Desvende o segredo dos irracionais.' },
@@ -532,7 +532,7 @@ export default function App() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextLevel}
-                className="inline-flex items-center gap-3 px-10 py-5 bg-canva-teal text-white rounded-full font-bold text-xl shadow-2xl shadow-canva-teal/30 hover:bg-canva-teal/90 transition-all"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-canva-teal text-white rounded-full font-bold text-lg shadow-2xl shadow-canva-teal/30 hover:bg-canva-teal/90 transition-all"
               >
                 Começar Aula Prática
                 <ArrowRight className="w-6 h-6" />
@@ -547,7 +547,7 @@ export default function App() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 space-y-10 border-8 border-white"
+              className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-8 space-y-6 border-8 border-white flex-1 min-h-0 flex flex-col overflow-y-auto"
             >
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="space-y-1">
@@ -563,7 +563,7 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="bg-slate-50 rounded-[3rem] p-12 flex items-center justify-center min-h-[400px] border-2 border-dashed border-slate-200">
+                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[250px] lg:min-h-[350px] border-2 border-dashed border-slate-200">
                   <motion.div 
                     className="bg-canva-teal rounded-3xl shadow-2xl flex items-center justify-center relative ring-8 ring-canva-teal/20"
                     style={{ 
@@ -650,7 +650,7 @@ export default function App() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 space-y-10 border-8 border-white"
+              className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-8 space-y-6 border-8 border-white flex-1 min-h-0 flex flex-col overflow-y-auto"
             >
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -663,7 +663,7 @@ export default function App() {
               </div>
 
               <div className="flex flex-col items-center gap-10">
-                <div className="bg-slate-50 rounded-[3rem] p-12 flex items-center justify-center min-h-[300px] w-full border-2 border-dashed border-slate-200">
+                <div className="bg-slate-50 rounded-[2rem] p-6 flex items-center justify-center min-h-[250px] w-full border-2 border-dashed border-slate-200">
                   <motion.div 
                     key={currentQuestion}
                     initial={{ scale: 0, rotate: -10 }}
@@ -710,7 +710,7 @@ export default function App() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 space-y-10 border-8 border-white"
+              className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-8 space-y-6 border-8 border-white flex-1 min-h-0 flex flex-col overflow-y-auto"
             >
                <div className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -722,7 +722,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-100/50 p-8 md:p-12 rounded-[3.5rem] border-2 border-dashed border-slate-200">
+              <div className="bg-slate-100/50 p-6 md:p-8 rounded-[2.5rem] border-2 border-dashed border-slate-200">
                 <div className="flex flex-col items-center gap-12">
                   
                   {/* Central Square visualization */}
@@ -791,7 +791,7 @@ export default function App() {
               key="level3"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-[3rem] shadow-2xl p-8 md:p-12 space-y-10 border-8 border-white"
+              className="bg-white rounded-[2.5rem] shadow-2xl p-6 md:p-8 space-y-6 border-8 border-white flex-1 min-h-0 flex flex-col overflow-y-auto"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -845,44 +845,44 @@ export default function App() {
               </AnimatePresence>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div className="lg:col-span-7 space-y-8">
+                <div className="lg:col-span-7 space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-6 bg-emerald-50 rounded-[2rem] border-2 border-emerald-100">
+                    <div className="p-4 bg-emerald-50 rounded-[2rem] border-2 border-emerald-100">
                       <div className="text-xs font-bold text-emerald-600 mb-1 uppercase tracking-wider">ÁREA DISPONÍVEL</div>
-                      <div className="text-3xl font-black text-emerald-800">{gardenArea} m²</div>
+                      <div className="text-2xl font-black text-emerald-800">{gardenArea} m²</div>
                     </div>
-                    <div className="p-6 bg-emerald-50 rounded-[2rem] border-2 border-emerald-100">
+                    <div className="p-4 bg-emerald-50 rounded-[2rem] border-2 border-emerald-100">
                       <div className="text-xs font-bold text-emerald-600 mb-1 uppercase tracking-wider">PREÇO DA TELA</div>
-                      <div className="text-3xl font-black text-emerald-800">R$ 15,50<span className="text-sm">/m</span></div>
+                      <div className="text-2xl font-black text-emerald-800">R$ 15,50<span className="text-sm">/m</span></div>
                     </div>
                   </div>
 
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      <label className="text-lg font-bold text-slate-700 block">1. Calcule o Perímetro (4 × Lado)</label>
-                      <p className="text-sm font-medium text-slate-400 italic">Use a calculadora de ajuda se precisar da raiz de {gardenArea}.</p>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-base font-bold text-slate-700 block">1. Calcule o Perímetro (4 × Lado)</label>
+                      <p className="text-[10px] font-medium text-slate-400 italic leading-none">Use a calculadora de ajuda se precisar da raiz de {gardenArea}.</p>
                       <div className="relative">
                         <input 
                           type="number" 
                           value={perimInput}
                           onChange={(e) => setPerimInput(e.target.value)}
-                          className="w-full p-6 bg-slate-50 border-4 border-slate-50 rounded-3xl focus:border-emerald-500 focus:bg-white outline-none transition-all font-bold text-xl"
-                          placeholder="Digite o perímetro calculado..."
+                          className="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-3xl focus:border-emerald-500 focus:bg-white outline-none transition-all font-bold text-lg"
+                          placeholder="Perímetro..."
                         />
-                        <span className="absolute right-6 top-1/2 -translate-y-1/2 font-bold text-slate-300">metros</span>
+                        <span className="absolute right-6 top-1/2 -translate-y-1/2 font-bold text-slate-300 text-sm">m</span>
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <label className="text-lg font-bold text-slate-700 block">2. Custo Total das Telas (R$)</label>
+                    <div className="space-y-2">
+                      <label className="text-base font-bold text-slate-700 block">2. Custo Total das Telas (R$)</label>
                       <div className="relative">
-                        <div className="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-emerald-500 text-xl">R$</div>
+                        <div className="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-emerald-500 text-lg">R$</div>
                         <input 
                           type="number" 
                           value={costInput}
                           onChange={(e) => setCostInput(e.target.value)}
-                          className="w-full p-6 pl-16 bg-slate-50 border-4 border-slate-50 rounded-3xl focus:border-emerald-500 focus:bg-white outline-none transition-all font-bold text-xl"
-                          placeholder="Digite o valor total..."
+                          className="w-full p-4 pl-14 bg-slate-50 border-2 border-slate-100 rounded-3xl focus:border-emerald-500 focus:bg-white outline-none transition-all font-bold text-lg"
+                          placeholder="Valor total..."
                         />
                       </div>
                     </div>
@@ -891,19 +891,19 @@ export default function App() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={checkGardenResult}
-                      className="w-full py-6 bg-emerald-500 text-white rounded-full font-bold text-xl shadow-2xl shadow-emerald-500/20 hover:bg-emerald-600"
+                      className="w-full py-5 bg-emerald-500 text-white rounded-full font-bold text-lg shadow-2xl shadow-emerald-500/20 hover:bg-emerald-600"
                     >
                       Conferir Orçamento
                     </motion.button>
                   </div>
                 </div>
 
-                <div className="lg:col-span-5 bg-slate-50 rounded-[3rem] p-10 flex flex-col items-center justify-center gap-8 border-2 border-slate-100">
+                <div className="lg:col-span-5 bg-slate-50 rounded-[2.5rem] p-6 flex flex-col items-center justify-center gap-6 border-2 border-slate-100">
                    <div className="relative group">
                       <motion.div 
                         animate={{ rotate: [0, 2, 0, -2, 0] }}
                         transition={{ duration: 5, repeat: Infinity }}
-                        className="w-56 h-56 bg-white border-8 border-emerald-500 rounded-[2rem] shadow-2xl flex items-center justify-center relative p-4"
+                        className="w-48 h-48 bg-white border-8 border-emerald-500 rounded-[1.5rem] shadow-xl flex items-center justify-center relative p-4"
                       >
                         <div className="text-center">
                           <div className="text-xs font-bold text-slate-300 mb-1">JARDIM</div>
@@ -928,9 +928,9 @@ export default function App() {
               key="finish"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="space-y-8"
+              className="space-y-6 flex-1 min-h-0 flex flex-col overflow-y-auto"
             >
-              <div className="bg-canva-purple rounded-[3rem] shadow-2xl p-8 md:p-16 text-center text-white space-y-8 border-8 border-white/10">
+              <div className="bg-canva-purple rounded-[2.5rem] shadow-2xl p-6 md:p-10 text-center text-white space-y-6 border-8 border-white/10 shrink-0">
                 <div className="relative inline-block">
                   <motion.div 
                     animate={{ scale: [1, 1.2, 1], rotate: 360 }}
@@ -964,23 +964,21 @@ export default function App() {
                       />
                     </div>
                     <div className="space-y-2 text-left">
-                      <label className="text-xs font-bold uppercase opacity-60 ml-2">Sua Turma</label>
-                      <select 
+                      <label className="text-xs font-bold uppercase opacity-60 ml-2">Turma / Escola</label>
+                      <input 
+                        type="text" 
+                        placeholder="Ex: 901 / Escola X..."
                         value={playerClass}
                         onChange={(e) => setPlayerClass(e.target.value)}
                         disabled={hasSavedRecord}
-                        className="w-full p-4 rounded-2xl bg-white/10 border-2 border-white/20 text-white font-bold outline-none focus:bg-white/20 appearance-none disabled:opacity-50"
-                      >
-                        <option value="901 - 2026" className="text-slate-800">901 - 2026</option>
-                        <option value="902 - 2026" className="text-slate-800">902 - 2026</option>
-                        <option value="9013- 2026" className="text-slate-800">9013- 2026</option>
-                      </select>
+                        className="w-full p-4 rounded-2xl bg-white/10 border-2 border-white/20 text-white placeholder:text-white/40 font-bold outline-none focus:bg-white/20 disabled:opacity-50"
+                      />
                     </div>
                   </div>
                   
                   <button 
                     onClick={saveScore}
-                    disabled={!playerName.trim() || hasSavedRecord}
+                    disabled={!playerName.trim() || !playerClass.trim() || hasSavedRecord}
                     className={`w-full py-4 rounded-2xl font-black uppercase text-sm tracking-wider shadow-xl transition-all ${
                       hasSavedRecord 
                         ? 'bg-emerald-500 text-white cursor-default' 
@@ -993,7 +991,7 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="p-8 bg-white rounded-[2.5rem] border-4 border-slate-50 shadow-xl space-y-6">
+                <div className="p-6 bg-white rounded-[2.5rem] border-4 border-slate-50 shadow-xl space-y-4">
                   <h4 className="text-xl font-bold flex items-center gap-2">
                     <Trophy className="text-canva-yellow fill-canva-yellow" />
                     Top 5 Destaques da Escola
@@ -1023,7 +1021,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="p-8 bg-white rounded-[2.5rem] border-4 border-slate-50 shadow-xl space-y-6 flex flex-col justify-center text-center">
+                <div className="p-6 bg-white rounded-[2.5rem] border-4 border-slate-50 shadow-xl space-y-4 flex flex-col justify-center text-center">
                   <div className="p-4 bg-canva-teal/10 rounded-2xl inline-block mx-auto mb-4">
                     <Calculator className="w-10 h-10 text-canva-teal" />
                   </div>

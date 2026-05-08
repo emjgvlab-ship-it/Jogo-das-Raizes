@@ -15,7 +15,7 @@
         },
         "turma": {
           "type": "string",
-          "description": "The class of the player."
+          "description": "The class or school of the player."
         },
         "createdAt": {
           "type": "string",
